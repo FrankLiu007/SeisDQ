@@ -2,6 +2,7 @@ import urllib.request
 from io import StringIO
 import csv
 import datetime
+import sys
 #----------read neic events----------------------
 def request_events(evt):
     ###using csv format
@@ -9,7 +10,7 @@ def request_events(evt):
     
     if not evt["time_range"][0]:
         print("event start time must specified!")
-        exit()
+        sys.exit(-1)
     start_time="&starttime=" + evt['time_range'][0]
     end_time= "&endtime=" + evt['time_range'][1]
     minmagnitude= "&minmagnitude="+ str(evt['magnitude_range'][0])
@@ -28,7 +29,10 @@ def read_csv_events( inf):
     for evt in csv.DictReader(inf):
         evt['id']=i
         evt['time']=datetime.datetime.strptime(evt['time'],'%Y-%m-%dT%H:%M:%S.%fZ')
-        evt['magnitude']=evt.pop('mag')
+        evt['magnitude']=float( evt.pop('mag') )
+        evt['depth']= float(evt['depth'])
+        evt['latitude']=float(evt['latitude'])
+        evt['longitude'] =float (evt['longitude'])
         events.append(evt)
     return events
 

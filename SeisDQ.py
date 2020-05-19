@@ -5,61 +5,103 @@ import datetime
 import json
 from utils import neic
 from utils.TravelTime import calculate_travel_time
+import pickle
 
 class DataPool:
-    def __init__(self, pars, events, stations):
+    def __init__(self, pars, stations, events):
         self.pars=pars
         self.events=events
         self.stations=stations
-        self.all_data=""
+        self.all_data={}
 
     def process(self):
+        min_mag, max_mag=self.pars["events"]['magnitude_range']
+        min_dep, max_dep=self.pars["events"]['depth_range']
+
         for station in self.stations:
             stnet=station['network']
             stnm=station['name']
+            min_time, max_time=station["time_range"]
             for event in self.events:
-                b_mag, e_mag=event['magnitude_range']
-                if (event_)
-                if( mag<b_mag or mag>e_mag):
+                ##event magnitude
+                mag=event["magnitude"]
+                if( mag<min_mag or mag>max_mag):
                     continue
-                data1=processing_event(station, event, pars)
-                all.append(data1)
+
+                #event depth 
+                dep=event["depth"]
+                if( dep<min_dep or dep>max_dep):
+                    continue
+
+                ##event not in station operation period
+                if event["time"]<min_time or event["time"]>max_time:  
+                    continue
+                rr=self.processing_one_event(station, event)
+                if rr: ### make sure data exists
+                    self.all_data[station["id"], event["id"]]=rr  
+        return self.all_data
 ##--------------------processing one-event  --------------------
-    def processing_one_event(self, station, event, pars):
-        result=dict()
+    def processing_one_event(self, station, event):
+        par=self.pars
         tmin=station['start_time']
         tmax=station['end_time']
 
-        evla=event['lat']
-        evlo=event['lon']
+        evlo=event['longitude']
+        evla=event["latitude"]
         evdep=event['depth']
+
+        stla=station['latitude']
+        stlo=station['longitude']
 
         t1=event['time']
 
         time0=0
         time1=0
-        b_phase=par['seismic_phase']['begin']['phase']
-        e_phase=par['seismic_phase']['end']['phase']
+        b_phase=par['phases']['begin']['phase']
+        b_offset=par['phases']['begin']['time_offset']
 
-        t0=calculate_travel_time(station['lat'], station['lon'], event['lat'], event['lon'], evdep, b_phase, par['travel_time_tool'])
-        if(b_phase==e_phase):
-        t1=t0
-        else:
-            t1=calculate_travel_time(station['lat'], station['lon'], event['lat'], event['lon'], evdep, e_phase, par['travel_time_tool'])
+        e_phase=par['phases']['end']['phase']
+        e_offset=par['phases']['end']['time_offset']
+        ####  "0" stands for the event origin time
+        phases=set()
+        if b_phase!="0":
+            phases.add(b_phase)
+        if e_phase!="0":
+            phases.add(e_phase)
 
-        return result
+        arrivals=calculate_travel_time(evla, evlo,evdep, stla, stlo, phases, par['travel_time_tool'])
+        print("arrivals=", arrivals)
+        result=[]
+        t0=event["time"]+ datetime.timedelta(seconds=b_offset)
+        if b_phase!="0":
+            if not b_phase in arrivals:
+                print(station["name"], "event id="+event["id"], b_phase, "not found!")
+                return {}
+            t0+=datetime.timedelta(seconds=arrivals[b_phase]["time"])
 
-    def save(self):
-        for station in self.stations:
-            for event in self.events:
+        t1=event["time"]+ datetime.timedelta(seconds=e_offset)
+        if e_phase!="0":
+            if not e_phase in arrivals:
+                print(station["name"], event["id"], e_phase, "not found!")
+                return {}
+            t1+=datetime.timedelta(seconds=arrivals[e_phase]["time"])
+        
+        return {"phase":phases, "time_range":[t0,t1], "arrivals":arrivals}
 
-###read parameters       
+    ##
+    def save(self, path):
+        with open(path, "wb") as f :
+            pickle.dump(self, f)
+
+    @staticmethod
+    def load( path):
+        with open(path, "rb") as f :
+            return pickle.load(f)
+
+###read parameters 
 def read_pars( path):
     with open(path,'r') as f :
         return json.load(f)
-##read all stations        
-    
-def SaveData()
-    pass
+
 
 

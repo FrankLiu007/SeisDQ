@@ -1,3 +1,0 @@
-time,latitude,longitude,depth,mag,magType,nst,gap,dmin,rms,net,id,updated,place,type
-1998-07-16T11:56:36.420Z,-11.04,166.16,110.2,7,mwc,,,,0.88,us,usp0008rm2,2015-03-20T17:29:16.995Z,"Santa Cruz Islands",earthquake
-1999-01-28T08:10:05.420Z,52.886,-169.123,67.2,6.6,mwc,,,,0.94,us,usp00091uc,2015-02-12T23:25:58.689Z,"Fox Islands, Aleutian Islands, Alaska",earthquake

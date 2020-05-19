@@ -1,7 +1,7 @@
 # SeisDQ
-seismic data processing always contains data
+
 >SeisDQ is a flexible seismic framework to fetch seismic data from online or local database.
-It can be implimented easily for other purp
+It can be implimented easily for other purpose.
 ## Brief history of SeisDQ
 - GetEvent.py
 > When I was a graduate student, I used to process raw seismic data recorded by reftek rt130. The first step is convert all data to miniseed and then event data was cutted. I decided to write a script to directly fetch raw data from data achive (GetEvent.py).

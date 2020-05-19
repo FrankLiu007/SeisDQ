@@ -1,6 +1,0 @@
-sac > /dev/null 2>&1 << EOF
-r 1999.028.08.16.*
-ch evla 52.886 evlo -169.123 evdp 67.2 mag 6.6 user4 6.0276
-wh
-quit
-EOF

@@ -6,9 +6,8 @@
         "magnitude_range":[0,9.9],
         "time_range":["2010-01-01","2010-01-02"]
     }
-
 '''
-import neic
+from . import neic
 def filter_events(events, evt):
     result=[]
     for event in events:
@@ -24,6 +23,7 @@ def filter_events(events, evt):
 def read_events(evt):
     events=[]
     if evt['path']!='':
+        print("event['path'] not set, begin request event from NEIC")
         with open(evt['path']) as f :
             inf=StringIO(f.read())
             events=neic.read_csv_events(inf)

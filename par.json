@@ -1,6 +1,7 @@
-{
 
-    "seimic_phase":{
+
+{
+    "phases":{
         "begin":{
             "phase":"P",
             "time_offset":-50
@@ -10,37 +11,17 @@
             "time_offset":150
         }
     },
-    "distance_range": [
-        "30",
-        "90"
-    ],
-    "station":{
-        "path":"",
-        "location_code":"",
-        "components":[]
-    },
+    "distance_range": [30, 90],
+    "station_path": "stations.csv",
+
     "events": {
-        "path":"",
+        "path":"", 
         "depth_range":[0, 6371 ], 
-        "magnitude_range":[0,9.9],
-        "time_range":["",""]
+        "magnitude_range":[5.5,9.9],
+        "time_range":["2009-01-01","2009-01-02"]
 
     },
     "add_event_head_method":"sac",
     "travel_time_tool":"Taup",
-    "data_apply_mode":"per_station",
-    "breq_fast_head": {
-        ".NAME":"",
-        ".INST": "Institute of geophysics and oil resource, Yangtz University",
-        ".MAIL": " Wuhan city, China",
-        ".EMAIL": " breq_fast0@163.com",
-        ".PHONE": " 8618901194191",
-        ".FAX": " YOUR_FAX",
-        ".MEDIA:": " FTP",
-        ".ALTERNATE":" MEDIA: DAT",
-        ".ALTERNATE":" MEDIA: DLT3",
-        ".LABEL":"by_station_name",
-        ".FROM":" SQ",
-        ".QUALITY":" B"
-    }
+    "data_apply_mode":"per_station"
 }

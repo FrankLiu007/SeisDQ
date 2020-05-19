@@ -1,0 +1,9 @@
+sac > /dev/null 2>&1 << EOF
+r 1998.197.12.14.*
+ch evla -11.04 evlo 166.16 evdp 110.2 mag 7 user4 9.9717
+wh
+r 1999.028.08.25.*
+ch evla 52.886 evlo -169.123 evdp 67.2 mag 6.6 user4 11.4745
+wh
+quit
+EOF

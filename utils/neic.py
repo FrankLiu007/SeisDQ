@@ -24,7 +24,7 @@ def request_events(evt):
     return read_csv_events(StringIO(str0))
 
 def read_csv_events( inf):
-    events=[]
+    events={}
     i=0
     for evt in csv.DictReader(inf):
         evt['id']=i
@@ -33,7 +33,8 @@ def read_csv_events( inf):
         evt['depth']= float(evt['depth'])
         evt['latitude']=float(evt['latitude'])
         evt['longitude'] =float (evt['longitude'])
-        events.append(evt)
+        events[i]=evt
+        i=i+1
     return events
 
 def main():
@@ -46,7 +47,7 @@ def main():
     }
     events=request_events(evt)
     for event in events:
-        print(event)
+        print(events['event'])
 
 if __name__ == "__main__":
     main()

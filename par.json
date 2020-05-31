@@ -1,5 +1,3 @@
-
-
 {
     "phases":{
         "begin":{
@@ -15,13 +13,13 @@
     "station_path": "stations.csv",
 
     "events": {
-        "path":"", 
+        "path":"neic.evt", 
         "depth_range":[0, 6371 ], 
         "magnitude_range":[5.5,9.9],
-        "time_range":["2009-01-01","2009-01-02"]
+        "time_range":["2009-01-01","2009-03-05"]
 
     },
     "add_event_head_method":"sac",
     "travel_time_tool":"Taup",
-    "data_apply_mode":"per_station"
+    "data_apply_mode":"per_event"
 }

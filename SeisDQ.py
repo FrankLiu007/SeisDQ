@@ -18,11 +18,11 @@ class DataPool:
         min_mag, max_mag=self.pars["events"]['magnitude_range']
         min_dep, max_dep=self.pars["events"]['depth_range']
 
-        for station in self.stations:
+        for sId, station in self.stations.items():
             stnet=station['network']
             stnm=station['name']
             min_time, max_time=station["time_range"]
-            for event in self.events:
+            for eId, event in self.events.items():
                 ##event magnitude
                 mag=event["magnitude"]
                 if( mag<min_mag or mag>max_mag):
@@ -75,7 +75,7 @@ class DataPool:
         t0=event["time"]+ datetime.timedelta(seconds=b_offset)
         if b_phase!="0":
             if not b_phase in arrivals:
-                print(station["name"], "event id="+event["id"], b_phase, "not found!")
+                print(station["name"], "event id="+ str(event["id"]), b_phase, "not found!")
                 return {}
             t0+=datetime.timedelta(seconds=arrivals[b_phase]["time"])
 

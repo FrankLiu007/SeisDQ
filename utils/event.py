@@ -9,15 +9,15 @@
 '''
 from . import neic
 def filter_events(events, evt):
-    result=[]
-    for event in events:
+    result={}
+    for id, event in events.items():
         if event['magnitude']>evt['magnitude_range'][1]  or event['magnitude']<evt['magnitude_range'][0]:
             continue
         if event['time']>evt['time_range'][1]  or event['time']<evt['time_range'][0]:
             continue
         if event['depth']>evt['depth_range'][1]  or event['depth']<evt['depth_range'][0]:
             continue
-        result.append(event)
+        result[id]=event
     return result
 
 def read_events(evt):

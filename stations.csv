@@ -1,2 +1,2 @@
-network,name,latitude,longitude,elevation,position,start_time,end_time
-SYN,LG01,30.5,85.9,3000,Tibet,2009-01-01,2009-01-03
+network,name,latitude,longitude,elevation,components,location_code,position,start_time,end_time
+SYN,LG01,30.5,85.9,3000,BHZ BHN BHE,00,Tibet,2009-01-01,2009-05-03

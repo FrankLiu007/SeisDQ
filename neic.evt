@@ -1,0 +1,51 @@
+time,latitude,longitude,depth,mag,magType,nst,gap,dmin,rms,net,id,updated,place,type,horizontalError,depthError,magError,magNst,status,locationSource,magSource
+2009-02-02T17:53:21.800Z,-13.582,-76.558,21,6,mwc,277,81,,0.95,us,usp000gtd6,2020-01-04T06:48:12.751Z,"near the coast of central Peru",earthquake,,,,,reviewed,us,gcmt
+2009-01-31T21:51:52.180Z,36.719,141.148,34,5.7,mwb,352,31.6,,0.78,us,usp000gtaz,2020-01-04T06:47:58.501Z,"near the east coast of Honshu, Japan",earthquake,,,,,reviewed,us,us
+2009-01-31T16:29:36.860Z,-19.41,-69.065,102.3,5.5,mwc,239,54.7,,0.88,us,usp000gtau,2016-11-10T02:07:23.381Z,"Tarapaca, Chile",earthquake,,,,,reviewed,us,gcmt
+2009-01-30T03:47:10.930Z,-15.385,-174.473,10,5.7,mwc,135,50.8,,1.1,us,usp000gt8u,2016-11-10T02:07:20.535Z,"Tonga",earthquake,,,,,reviewed,us,gcmt
+2009-01-29T22:28:05.920Z,-8.108,-71.402,602.4,5.6,mwb,380,41.2,,0.86,us,usp000gt8f,2016-11-10T02:07:19.558Z,"Acre, Brazil",earthquake,,,,,reviewed,us,us
+2009-01-28T12:39:42.830Z,-16.973,-172.068,10,5.5,mwc,288,48.2,,0.91,us,usp000gt6z,2016-11-10T02:07:17.052Z,"Samoa Islands region",earthquake,,,,,reviewed,us,gcmt
+2009-01-28T07:53:38.190Z,-8.936,124.157,65.9,5.7,mwb,208,35.1,,0.96,us,usp000gt6q,2020-01-04T06:47:45.564Z,"Kepulauan Alor, Indonesia",earthquake,,7.9,,,reviewed,us,us
+2009-01-28T00:01:14.590Z,-0.262,98.28,20,5.7,mwc,176,30.1,,0.85,us,usp000gt67,2020-01-04T06:47:32.150Z,"Kepulauan Batu, Indonesia",earthquake,,,,,reviewed,us,us
+2009-01-27T23:57:13.300Z,55.536,164.298,23.8,5.5,mwc,265,53,,0.82,us,usp000gt65,2016-11-09T07:43:32.817Z,"Komandorskiye Ostrova, Russia region",earthquake,,9.4,,,reviewed,us,gcmt
+2009-01-27T06:29:13.000Z,-17.837,-178.677,601,5.9,mwc,261,32.8,,0.83,us,usp000gt5m,2016-11-10T02:07:14.491Z,"Fiji region",earthquake,,,,,reviewed,us,gcmt
+2009-01-26T19:33:04.730Z,-0.352,98.184,10,5.7,mwc,136,66,,1.03,us,usp000gt4s,2016-11-10T02:07:12.478Z,"Kepulauan Batu, Indonesia",earthquake,,,,,reviewed,us,gcmt
+2009-01-26T19:11:47.020Z,51.955,-171.159,25.3,5.8,mwc,438,68.7,,,us,usp000gt4p,2019-02-13T11:03:38.187Z,"Fox Islands, Aleutian Islands, Alaska",earthquake,,,,,reviewed,aeic,us
+2009-01-26T11:54:39.600Z,-17.796,-178.591,579.5,5.8,mwb,295,32,,0.78,us,usp000gt4d,2016-11-10T02:07:10.952Z,"Fiji region",earthquake,,4.2,,,reviewed,us,us
+2009-01-24T18:09:50.811Z,59.4302,-152.8875,97.9,5.9,ml,,,,0.96,ak,ak00913zo63t,2019-03-19T20:20:04.043Z,"Southern Alaska",earthquake,,0.9,,,reviewed,ak,ak
+2009-01-24T09:01:58.050Z,-19.584,-179.112,671,5.6,mwc,250,24.7,,0.78,us,usp000gt1m,2016-11-10T00:21:40.601Z,"Fiji region",earthquake,,,,,reviewed,us,gcmt
+2009-01-24T01:28:39.350Z,-28.25,-176.697,10,5.9,mwc,207,24.3,,1.01,us,usp000gt0w,2016-11-10T02:07:06.472Z,"Kermadec Islands region",earthquake,,,,,reviewed,us,gcmt
+2009-01-22T20:16:34.580Z,-7.307,128.568,146.7,6.1,mwc,391,13.5,,0.94,us,usp000gszq,2016-11-10T02:07:01.135Z,"Kepulauan Barat Daya, Indonesia",earthquake,,,,,reviewed,us,us
+2009-01-22T13:40:25.990Z,-5.912,148.511,44,6.1,mwb,183,17.3,,0.83,us,usp000gsze,2020-04-18T00:17:18.677Z,"New Britain region, Papua New Guinea",earthquake,,,,,reviewed,us,us
+2009-01-21T17:08:42.990Z,-22.689,171.043,24,6.1,mwc,185,47.6,,1.01,us,usp000gsy5,2016-11-09T07:42:58.179Z,"southeast of the Loyalty Islands",earthquake,,,,,reviewed,us,us
+2009-01-20T10:46:53.230Z,-4.667,129.814,143.8,5.5,mwc,104,40.3,,0.92,us,usp000gswg,2020-01-04T06:47:05.064Z,"Banda Sea",earthquake,,7.8,,,reviewed,us,us
+2009-01-19T22:26:57.440Z,-22.792,170.74,35,5.6,mwc,110,39.3,,0.74,us,usp000gsuy,2016-11-10T02:06:54.729Z,"southeast of the Loyalty Islands",earthquake,,,,,reviewed,us,gcmt
+2009-01-19T03:46:37.520Z,-22.477,170.806,35,6,mwc,123,47.8,,1.13,us,usp000gstn,2016-11-10T02:06:50.728Z,"southeast of the Loyalty Islands",earthquake,,,,,reviewed,us,gcmt
+2009-01-19T03:35:18.840Z,-22.596,170.911,12,6.6,mwc,182,25.7,,1.16,us,usp000gstk,2016-11-10T02:06:50.238Z,"southeast of the Loyalty Islands",earthquake,,,,,reviewed,us,gcmt
+2009-01-18T14:11:48.860Z,-30.199,-177.951,33,6.4,mwc,361,17.5,,1,us,usp000gssv,2016-11-10T02:06:48.709Z,"Kermadec Islands, New Zealand",earthquake,,,,,reviewed,us,us
+2009-01-17T02:57:31.900Z,15.739,-92.744,169.1,5.8,mwc,330,31.4,,,us,usp000gsqq,2020-01-04T06:46:51.562Z,"Chiapas, Mexico",earthquake,,,,,reviewed,unm,gcmt
+2009-01-16T19:55:22.260Z,-22.304,170.274,21.5,5.8,mwc,78,48.1,,1.04,us,usp000gsq0,2016-11-10T02:06:41.953Z,"southeast of the Loyalty Islands",earthquake,,12.8,,,reviewed,us,us
+2009-01-15T17:49:39.070Z,46.857,155.154,36,7.4,mwc,522,15.6,,0.91,us,usp000gsmz,2017-11-13T18:03:03.380Z,"east of the Kuril Islands",earthquake,,,,,reviewed,us,us
+2009-01-15T16:15:01.910Z,-10.334,161.211,114.1,5.7,mwb,210,24.1,,0.9,us,usp000gsmy,2020-01-04T06:46:37.999Z,"Solomon Islands",earthquake,,6.5,,,reviewed,us,us
+2009-01-15T13:02:31.200Z,-22.54,170.43,35,5.6,mwc,53,95.3,,1.16,us,usp000gsmr,2016-11-10T02:06:39.912Z,"southeast of the Loyalty Islands",earthquake,,,,,reviewed,us,gcmt
+2009-01-15T07:27:20.290Z,-22.352,170.635,27,6.7,mwc,253,24.1,,0.96,us,usp000gsm5,2016-11-10T02:06:39.330Z,"southeast of the Loyalty Islands",earthquake,,,,,reviewed,us,us
+2009-01-13T01:04:42.640Z,-13.147,66.078,10,6,mwc,166,70.1,,1.32,us,usp000gshh,2016-11-10T02:06:35.112Z,"Mid-Indian Ridge",earthquake,,,,,reviewed,us,us
+2009-01-09T03:44:38.800Z,10.437,56.962,10,5.7,mwb,165,56.9,,1,us,usp000gscv,2016-11-10T02:06:29.811Z,"Carlsberg Ridge",earthquake,,,,,reviewed,us,us
+2009-01-08T19:21:35.610Z,10.165,-84.197,14,6.1,mwc,289,73.9,,0.95,us,usp000gscg,2020-04-18T00:17:14.138Z,"Costa Rica",earthquake,,,,,reviewed,us,us
+2009-01-08T16:18:50.120Z,-0.411,132.934,18,5.5,mwc,124,39.3,,1,us,usp000gsc8,2020-01-04T06:46:10.845Z,"near the north coast of Papua, Indonesia",earthquake,,,,,reviewed,us,gcmt
+2009-01-07T16:25:33.260Z,-20.707,-179.224,656.6,5.6,mwc,275,37,,0.84,us,usp000gsb3,2016-11-10T00:21:40.090Z,"Fiji region",earthquake,,,,,reviewed,us,gcmt
+2009-01-06T22:48:27.250Z,-0.659,133.434,16,6,mwc,159,27.7,,0.99,us,usp000gs9t,2020-04-18T00:17:11.855Z,"near the north coast of Papua, Indonesia",earthquake,,,,,reviewed,us,us
+2009-01-05T10:59:30.470Z,23.808,-108.757,10,5.5,mwb,248,105.8,,1.09,us,usp000gs7c,2016-11-10T02:06:17.062Z,"Gulf of California",earthquake,,,,,reviewed,us,us
+2009-01-04T23:12:59.290Z,36.442,70.883,186.7,5.7,mwc,332,20.1,,0.89,us,usp000gs6n,2020-01-04T06:45:41.389Z,"Hindu Kush region, Afghanistan",earthquake,,3.3,,,reviewed,us,gcmt
+2009-01-04T07:14:00.550Z,-0.395,132.757,35,5.9,mwc,109,39.5,,1.09,us,usp000gs51,2020-01-04T06:45:24.254Z,"near the north coast of Papua, Indonesia",earthquake,,,,,reviewed,us,gcmt
+2009-01-04T05:44:04.420Z,-0.669,133.194,31.9,5.7,mwc,115,37.4,,0.88,us,usp000gs4s,2020-01-04T06:45:09.771Z,"near the north coast of Papua, Indonesia",earthquake,,,,,reviewed,us,gcmt
+2009-01-04T00:00:38.120Z,-0.694,133.275,35,5.5,mb,97,39.4,,1.01,us,usp000gs3x,2020-01-04T06:44:56.597Z,"near the north coast of Papua, Indonesia",earthquake,,,,54,reviewed,us,us
+2009-01-03T22:33:40.290Z,-0.691,133.305,23,7.4,mwc,314,21.1,,1.03,us,usp000gs3t,2020-04-18T00:17:09.496Z,"near the north coast of Papua, Indonesia",earthquake,,,,,reviewed,us,gcmt
+2009-01-03T21:49:30.880Z,-0.325,132.885,29.2,5.6,mb,144,30.2,,1.05,us,usp000gs3m,2020-01-04T06:44:25.570Z,"near the north coast of Papua, Indonesia",earthquake,,10.1,,73,reviewed,us,us
+2009-01-03T20:23:20.180Z,36.419,70.743,204.8,6.6,mwc,344,22.6,,0.86,us,usp000gs2v,2020-01-04T06:44:09.269Z,"Hindu Kush region, Afghanistan",earthquake,,,,,reviewed,us,gcmt
+2009-01-03T19:53:18.900Z,-0.589,133.363,35,5.6,mb,86,46.2,,0.96,us,usp000gs2f,2020-01-04T06:43:56.284Z,"near the north coast of Papua, Indonesia",earthquake,,,,48,reviewed,us,us
+2009-01-03T19:43:50.650Z,-0.414,132.885,17,7.7,mwc,288,29.8,,1.27,us,usp000gs2d,2020-04-18T00:17:07.192Z,"near the north coast of Papua, Indonesia",earthquake,,,,,reviewed,us,gcmt
+2009-01-02T20:14:30.630Z,0.791,-27.118,10,5.5,mwc,127,35.9,,1.02,us,usp000gs13,2016-11-10T02:06:08.917Z,"central Mid-Atlantic Ridge",earthquake,,,,,reviewed,us,us
+2009-01-02T19:42:27.190Z,0.624,-26.661,10,5.6,mwc,117,36.3,,1.33,us,usp000gs11,2016-11-10T02:06:08.412Z,"central Mid-Atlantic Ridge",earthquake,,,,,reviewed,us,us
+2009-01-01T16:57:53.110Z,-4.332,101.298,19,5.5,mwc,159,35.2,,1.18,us,usp000grzf,2016-11-10T02:06:05.959Z,"southern Sumatra, Indonesia",earthquake,,,,,reviewed,us,gcmt
+2009-01-01T06:27:51.220Z,-34.84,-107.647,10,5.8,mwc,62,48.9,,1.13,us,usp000gryu,2016-11-10T02:06:04.471Z,"southern East Pacific Rise",earthquake,,,,,reviewed,us,us

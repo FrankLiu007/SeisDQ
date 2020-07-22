@@ -16,7 +16,7 @@ It can be implimented easily for other purpose.
 - [ ] It is difficult to maintain the code.
   > 
 - [ ] The codes above are similar.
-  > They all contains travel time calculation, data application, data preprocess ( convert to proper format, add header information et.,)
+  > They all contains travel time calculation, data application, data preprocess ( convert to proper format, add header information etc.)
 
 At last, I decided to refactor the code.
 
@@ -27,8 +27,15 @@ At last, I decided to refactor the code.
 * distaz, if ttimes is used to calculate travel time (I will integrate distaz into ttimes in future ). 
 * reftek tools (arcfetch, rt_sac) if used to get data recorded by rt130 from local storage 
 
-### installation
+### installation && ussage
+download the source code, and run tests:
+1. breq_fast test: 
+```python breq_test.py breq.head ```
+2. reftek test: 
+```python reftek_test.py reftek_data_dir  output_dir ```
+
 At present, the code is only tested on linux, but should be used on windows and macos with small modifications.
+
 
 ### implimention
 In order to impliment this code for other purpose, please refer to the reftek_test.py and iris.test.py

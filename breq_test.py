@@ -1,10 +1,8 @@
-from SeisDQ import *
-from IRIS import breq_fast
-from utils import event
-from utils import station
-from utils import event
+from SeisDQ import DataPool
+from IRIS.breq_fast import *
+from utils import station, event
 import json
-#### breq_fast request to IRIS
+
 if __name__ == "__main__":
 
     pars_path="par.json"
@@ -19,13 +17,11 @@ if __name__ == "__main__":
         if not breq_head:
             print("error reading parameter files!")
             exit(-1)
-        #### add breq_fast head to pars
-        pars['breq_head']=breq_head 
-          
+
     stations=station.read(pars['station_path'])
     events=event.read_events(pars['events'])
     pool=DataPool(pars, stations, events)
     all_data=pool.process()
     
-    reqs=breq_fast.generate_requests(pool)
-    breq_fast.SendRequest(reqs)
+    reqs=generate_requests(pool, breq_head)
+    SendRequest(reqs)

@@ -1,10 +1,8 @@
 #!/usr/bin/python3
 
-
 import datetime
-import json
 from utils import neic
-from utils.TravelTime import calculate_travel_time
+from utils.TravelTime import calculate_travel_time, get_distance
 import pickle
 
 class DataPool:
@@ -14,15 +12,17 @@ class DataPool:
         self.stations=stations
         self.all_data={}
 
+
     def process(self):
         min_mag, max_mag=self.pars["events"]['magnitude_range']
         min_dep, max_dep=self.pars["events"]['depth_range']
-
+        min_dist, max_dist=self.pars['distance_range']
         for sId, station in self.stations.items():
             stnet=station['network']
             stnm=station['name']
             min_time, max_time=station["time_range"]
             for eId, event in self.events.items():
+
                 ##event magnitude
                 mag=event["magnitude"]
                 if( mag<min_mag or mag>max_mag):
@@ -36,12 +36,17 @@ class DataPool:
                 ##event not in station operation period
                 if event["time"]<min_time or event["time"]>max_time:  
                     continue
-                rr=self.processing_one_event(station, event)
+                ## distance range
+                dist=get_distance(station['latitude'], station['longitude'], event['latitude'], event['longitude'] )
+                if  dist>max_dist or  dist<min_dist:
+                    continue 
+
+                rr=self.processing_one_event(dist, station, event)
                 if rr: ### make sure data exists
                     self.all_data[station["id"], event["id"]]=rr  
         return self.all_data
 ##--------------------processing one-event  --------------------
-    def processing_one_event(self, station, event):
+    def processing_one_event(self, dist, station, event):
         par=self.pars
         tmin=station['start_time']
         tmax=station['end_time']
@@ -69,7 +74,7 @@ class DataPool:
         if e_phase!="0":
             phases.add(e_phase)
 
-        arrivals=calculate_travel_time(evla, evlo,evdep, stla, stlo, phases, par['travel_time_tool'])
+        arrivals=calculate_travel_time(dist, evdep, phases, par['travel_time_tool'])
         print("arrivals=", arrivals)
         result=[]
         t0=event["time"]+ datetime.timedelta(seconds=b_offset)
@@ -98,10 +103,7 @@ class DataPool:
         with open(path, "rb") as f :
             return pickle.load(f)
 
-###read parameters 
-def read_pars( path):
-    with open(path,'r') as f :
-        return json.load(f)
+
 
 
 

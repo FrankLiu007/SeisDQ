@@ -2,32 +2,27 @@ import subprocess
 import pexpect
 import sys
 import json
-
-def calculate_travel_time(evla, evlo,depth, stla, stlo, phases, tool):
+def calculate_travel_time(dist, evdep, phases, tool):
     if tool.lower()=="taup":
-        return travel_time_taup(evla, evlo, depth, stla, stlo, phases)
+        return travel_time_taup(dist, evdep,  phases)
     elif tool.lower()=="ttimes":
-        dist=get_distance(evla, evlo,  stla, stlo)
-        return travel_time_ttimes(phases,depth,dist)
+        return travel_time_ttimes(phases,evdep,dist)
 
 #####    
 def get_distance(evla, evlo,  stla, stlo):
-    distaz='distaz '+ evla +' '+ evlo + ' '+  stla +' '+ stlo
+    distaz='distaz '+ str(evla) +' '+  str(evlo) + ' '+  str(stla) +' '+ str(stlo)
     status, out1= subprocess.getstatusoutput(distaz)
     if(status!=0):
         print('Command ',distaz,' failed')
         return ''
     return float(out1.split()[0])
 
-def travel_time_taup(evla, evlo,depth, stla, stlo,  phases):
-    cmd="taup_time -mod iasp91 -evt " + str(evla)+"  "+ str(evlo) + " -h "+ str(depth) \
-        + " -sta "+ str(stla)+"  "+str(stlo)   
-    
+def travel_time_taup(dist,depth,   phases):
+    cmd="taup_time -mod iasp91 -deg " + str(dist)+ "  -h "+ str(depth)  
     ph=' -ph '
     for phase in phases:
         ph=ph+phase+","
     cmd=cmd+ph[:-1] +  "  --json  "
-
     print("Taup cmd: "+ cmd)
     status, out1= subprocess.getstatusoutput(cmd)
     

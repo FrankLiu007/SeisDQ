@@ -13,14 +13,16 @@
             "time_offset":150  ## in seconds, minus number means a few seconds before a phase
         }
     },
+
+    
     "distance_range": [30, 90],
-    "station_path": "stations.csv",
+    "station_path": "/data1/liuqimin/LG_01/stations.csv",
 
     "events": {        
-        "path":"neic.evt",   ## leave blank(""), and events will be downloaded from neic
+        "path":"",   ## leave blank(""), and events will be downloaded from neic
         "depth_range":[0, 6371 ], 
         "magnitude_range":[5.5,9.9],
-        "time_range":["2009-01-01","2009-03-05"]  ## time format should be "yyyy-mm-dd" 
+        "time_range":["2008-10-01","2009-06-01"]  ## time format should be "yyyy-mm-dd" 
 
     },
 
@@ -31,13 +33,13 @@
     # data_apply_mode: per_station or per_event. 
     # For per_station, data requests will be sent by station, and the file will be arraged by station
     # For per_event, data requests will be sent by event, and the file will be arraged by event
-    "data_apply_mode":"per_event",
+    "data_apply_mode":"per_station",
 
     #top diretory to store the processed data
-    "output_dir":"",  
+    "output_dir":"/data1/liuqimin/output",  
     
     #top directory contains the input data
-    "input_dir":"",    
+    "input_dir":"/data1/liuqimin/LG_01",    
     
     ##output data format, such as sac, segy, etc.
     "output_data_format":"sac"  

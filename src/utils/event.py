@@ -8,31 +8,32 @@
     }
 '''
 from . import neic
-def filter_events(events, evt):
+import  io
+def filter_events(events, evt_par):
     result={}
     for id, event in events.items():
-        if event['magnitude']>evt['magnitude_range'][1]  or event['magnitude']<evt['magnitude_range'][0]:
+        if event['magnitude']>evt_par['magnitude_range'][1]  or event['magnitude']<evt_par['magnitude_range'][0]:
             continue
-        if event['time']>evt['time_range'][1]  or event['time']<evt['time_range'][0]:
+        if event['time']>evt_par['time_range'][1]  or event['time']<evt_par['time_range'][0]:
             continue
-        if event['depth']>evt['depth_range'][1]  or event['depth']<evt['depth_range'][0]:
+        if event['depth']>evt_par['depth_range'][1]  or event['depth']<evt_par['depth_range'][0]:
             continue
         result[id]=event
     return result
 
-def read_events(evt):
+def read_events(evt_par):
     events=[]
-    if evt['path']!='':
+    if evt_par['path']!='':
         print("event['path'] not set, begin request event from NEIC")
-        with open(evt['path']) as f :
-            inf=StringIO(f.read())
+        with open(evt_par['path']) as f :
+            inf=io.StringIO(f.read())
             events=neic.read_csv_events(inf)
-            events=filter_events(events)
+            events=filter_events(events, evt_par)
         if not events:
             print("failed reading events from local file!")
             print("start getting events from NEIC through http")
-            events=neic.request_events(evt)
+            events=neic.request_events(evt_par)
     else:
-        events=neic.request_events(evt)
+        events=neic.request_events(evt_par)
 
     return events

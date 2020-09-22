@@ -36,6 +36,7 @@ def generate_requests(pool, breq_head):
                     requests[eId]=head+"\n"+tmp
    
     return requests
+    
 def generate_breq_head(breq_head):
     breq=""
     for key, value in breq_head.items():
@@ -49,32 +50,10 @@ def generate_breq_head(breq_head):
     return breq
 
 
-def SendRequest(breqs, head, data_apply_mode):  ###not completed
+def SendRequests(breqs):  ###not completed
     for key, req in breqs.items():
         if True:
-            pass
-
+            print("\n")
+            print(req)
+            print("\n")
     return 'success'
-
-if __name__ == "__main__":
-
-    pars_path="par.json"
-    breq_path="breq.head"
-    with open(pars_path,'r') as f :
-        pars= json.load(f)
-        if not pars:
-            print("error reading parameter files!")
-            exit(-1)
-    with open(breq_path,'r') as f :
-        breq_head= json.load(f)
-        if not breq_head:
-            print("error reading parameter files!")
-            exit(-1)
-
-    stations=station.read(pars['station_path'])
-    events=event.read_events(pars['events'])
-    pool=DataPool(pars, stations, events)
-    all_data=pool.process()
-    
-    reqs=generate_requests(pool, breq_head)
-    SendRequest(reqs)

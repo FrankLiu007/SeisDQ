@@ -16,13 +16,13 @@
 
     
     "distance_range": [30, 90],
-    "station_path": "/data1/liuqimin/LG_01/stations.csv",
+    "station_path": "stations.csv",
 
     "events": {        
         "path":"",   ## leave blank(""), and events will be downloaded from neic
         "depth_range":[0, 6371 ], 
         "magnitude_range":[5.5,9.9],
-        "time_range":["2008-10-01","2009-06-01"]  ## time format should be "yyyy-mm-dd" 
+        "time_range":["2013-05-09","2020-12-01"]  ## time format should be "yyyy-mm-dd" 
 
     },
 
@@ -36,10 +36,10 @@
     "data_apply_mode":"per_station",
 
     #top diretory to store the processed data
-    "output_dir":"/data1/liuqimin/output",  
+    "output_dir":"/media/liuqimin/data/output",  
     
     #top directory contains the input data
-    "input_dir":"/data1/liuqimin/LG_01",    
+    "input_dir":"/media/liuqimin/data/LG_01",    
     
     ##output data format, such as sac, segy, etc.
     "output_data_format":"sac"  

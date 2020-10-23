@@ -26,4 +26,4 @@ if __name__ == "__main__":
 ##examples to add headers to file
     print("begin adding event information to files")
     if pool.pars['output_data_format'].lower()=='sac':
-        reftek.add_sac_head(result)   
+        reftek.add_sac_head(result) 

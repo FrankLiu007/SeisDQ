@@ -1,0 +1,9 @@
+{
+    "sender":"breq_fast0@163.com",
+    "receiver":"284693929@qq.com",
+    #"receiver":"breq_fast@iris.washington.edu",
+    "subject":"breq_fast request",
+    "smtpserver":"smtp.163.com",
+    "username":"breq_fast0",
+    "password":"HHKFXGMLJEDLTVUO"
+}

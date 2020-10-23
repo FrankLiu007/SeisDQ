@@ -23,14 +23,12 @@ def travel_time_taup(dist,depth,   phases):
     for phase in phases:
         ph=ph+phase+","
     cmd=cmd+ph[:-1] +  "  --json  "
-    print("Taup cmd: "+ cmd)
     status, out1= subprocess.getstatusoutput(cmd)
     
     if(status!=0):
         print('Command ',cmd,' failed')
         sys.exit(-1)
     results=json.loads(out1)
-
     out={}    
     for arr in results["arrivals"]:
         out[arr["phase"]]={ "time":float(arr["time"]), "rayp":float(arr["rayparam"])}

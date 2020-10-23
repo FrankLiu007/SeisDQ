@@ -11,8 +11,9 @@ def request_events(evt):
     if not evt["time_range"][0]:
         print("event start time must specified!")
         sys.exit(-1)
-    start_time="&starttime=" + evt['time_range'][0]
-    end_time= "&endtime=" + evt['time_range'][1]
+    
+    start_time="&starttime=" + evt['time_range'][0].strftime("%Y-%m-%d")
+    end_time= "&endtime=" + evt['time_range'][1].strftime("%Y-%m-%d")
     minmagnitude= "&minmagnitude="+ str(evt['magnitude_range'][0])
     maxmagnitude= "&maxmagnitude="+ str(evt['magnitude_range'][1])
     mindepth="&maxdepth="+ str(evt['depth_range'][0])

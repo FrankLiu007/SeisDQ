@@ -75,7 +75,7 @@ class DataPool:
             phases.add(e_phase)
 
         arrivals=calculate_travel_time(dist, evdep, phases, par['travel_time_tool'])
-        print("arrivals=", arrivals)
+        
         result=[]
         t0=event["time"]+ datetime.timedelta(seconds=b_offset)
         if b_phase!="0":

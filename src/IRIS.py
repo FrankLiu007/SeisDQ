@@ -1,11 +1,19 @@
 from SeisDQ import *
 from utils import event, station
-
+import random, string
 #### breq_fast request to IRIS
 import datetime
 
-def generate_breq_requests(pool, breq_head):
+def generate_breq_requests(pool, breq):
     requests={}
+
+    breq_head=breq["head"]
+    if breq['prefix']=="begin_phase":
+        prefix=pool.pars["phases"]['begin']["phase"]
+    elif breq['prefix']=="end_phase":
+        prefix=pool.pars["phases"]['end']["phase"] 
+    prefix=prefix+'-'+''.join(random.choices('0123456789', k=4) )
+
 
     for sId, eId in pool.all_data:
         station=pool.stations[sId]
@@ -23,14 +31,14 @@ def generate_breq_requests(pool, breq_head):
             if sId in requests:
                 requests[sId]=requests[sId]+"\n"+ tmp
             else:
-                breq_head['.LABEL']=stnet+"."+stnm+"-"+str(sId)
+                breq_head['.LABEL']=stnet+"."+stnm+"-"+ prefix
                 head=generate_breq_head(breq_head)
                 requests[sId]=head+"\n"+tmp
         elif pool.pars["data_apply_mode"]=="per_event":
             if eId in requests:
                 requests[eId]=requests[eId]+"\n"+tmp
             else:
-                breq_head['.LABEL']="eventId-"+str(eId)
+                breq_head['.LABEL']="eventId-"+str(eId)+  prefix
                 head=generate_breq_head(breq_head)
                 requests[eId]=head+"\n"+tmp
 

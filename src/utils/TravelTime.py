@@ -15,6 +15,7 @@ def get_distance(evla, evlo,  stla, stlo):
     if(status!=0):
         print('Command ',distaz,' failed')
         return ''
+    
     return float(out1.split()[0])
 
 def travel_time_taup(dist,depth,   phases):

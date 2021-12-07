@@ -1,0 +1,4 @@
+network,name,start_time,end_time,latitude,longitude,elevation,components,location_code
+G,NOUC,1988-3-21,2599-12-30,-22.09863,166.30665,137,BHE BHN BHZ,
+G,CRZF,1986-2-1,2599-12-30,-46.43096,51.855308,140,BHE BHN BHZ,00
+II,COCO,1996-12-15,2599-12-30,-12.1901,96.8349,1,BHE BHN BHZ,

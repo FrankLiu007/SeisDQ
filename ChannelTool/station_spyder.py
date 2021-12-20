@@ -19,7 +19,7 @@ def get_mda_page(proxies, network=str, station=str, start_time=str, end_time=str
     '''
     url = f'http://ds.iris.edu/mda/{network}/{station}/?starttime={start_time}&endtime={end_time}'
     res = requests.get(url, proxies, timeout=60)
-    if res.status_code is 200:
+    if res.status_code == 200:
         return res.text
     else:
         raise Exception('爬取出现错误：' + res.text)
@@ -34,7 +34,7 @@ def get_availability_data(datacenter, network_code, station_code, epoch_starttim
     FormData = {"callback_data": callback_data}
     headers = {"X-Requested-With": "XMLHttpRequest"}
     res = requests.post(url=url, headers=headers, data=FormData, proxies=proxies, timeout=60)
-    if res.status_code is 200:
+    if res.status_code == 200:
         availability = res.json()['availability']
         if availability:
             restriction = availability[0]['restriction']
@@ -143,19 +143,20 @@ def reset_data(data):
                             if hertz not in tmp_data['locations'][location_code][device_name].keys():
                                 tmp_data['locations'][location_code][device_name][hertz] = {}
                             if cha_name not in tmp_data['locations'][location_code][device_name][hertz].keys():
-                                tmp_data['locations'][location_code][device_name][hertz][cha_name] = []
-                            tmp_data['locations'][location_code][device_name][hertz][cha_name].append(mda['epoch'])
+                                tmp_data['locations'][location_code][device_name][hertz][cha_name] = {}
+                                tmp_data['locations'][location_code][device_name][hertz][cha_name]["time"]=[]
+                            tmp_data['locations'][location_code][device_name][hertz][cha_name]["time"].append(mda['epoch'])
 
         # 分量的时间排序，暂时是排序，也可以考虑给定阈值合并时间段
-        for location_code, device in tmp_data['locations'].items():
-            for device_name, hertz_list in device.items():
-                for hertz, cha_list in hertz_list.items():
-                    for cha_name, cha_space in cha_list.items():
-                        # new_time = []
-                        # for item in cha_space:
-                        #     pass
-                        tmp_data['locations'][location_code][device_name][hertz][cha_name].sort()
-                        # print(tmp_data['locations'][location_code][device_name][hertz][cha_name])
+        # for location_code, device in tmp_data['locations'].items():
+        #     for device_name, hertz_list in device.items():
+        #         for hertz, cha_list in hertz_list.items():
+        #             for cha_name, cha_space in cha_list.items():
+        #                 # new_time = []
+        #                 # for item in cha_space:
+        #                 #     pass
+        #                 tmp_data['locations'][location_code][device_name][hertz][cha_name].sort()
+        #                 # print(tmp_data['locations'][location_code][device_name][hertz][cha_name])
 
         re_data.append(tmp_data)
     return re_data
@@ -202,8 +203,8 @@ if __name__ == '__main__':
     network = 'IC'
     station = 'LSA'
     proxies = {
-        "http": "http://127.0.0.1:1082",
-        "https": "http://127.0.0.1:1082"
+        "http": "http://127.0.0.1:1089",
+        "https": "http://127.0.0.1:1089"
     }
     page = get_mda_page(network, station, start_time, end_time, proxies)
     # page = ''

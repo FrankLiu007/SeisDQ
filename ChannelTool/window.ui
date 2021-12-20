@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>833</width>
-    <height>1028</height>
+    <width>806</width>
+    <height>649</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Component Select Tool for SeisDQ</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -53,7 +53,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="upload_excel_btn">
+        <widget class="QPushButton" name="read_excel_btn">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -65,7 +65,7 @@
 background-color: rgb(226,226,226);</string>
          </property>
          <property name="text">
-          <string>参数名上传</string>
+          <string>选择台站参数文件</string>
          </property>
         </widget>
        </item>
@@ -101,12 +101,12 @@ background-color:#455ab3;
 color:#fff;</string>
          </property>
          <property name="text">
-          <string>保  存</string>
+          <string>保存</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="reload_btn">
+        <widget class="QPushButton" name="load_btn">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -119,11 +119,27 @@ background-color:#455ab3;
 color:#fff;</string>
          </property>
          <property name="text">
-          <string>数据加载</string>
+          <string>加载台站数据</string>
          </property>
         </widget>
        </item>
       </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QFrame" name="frame_6">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::HLine</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
      </widget>
     </item>
     <item>
@@ -135,8 +151,23 @@ color:#fff;</string>
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
        <item>
         <widget class="QFrame" name="frame_2">
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -152,11 +183,9 @@ color:#fff;</string>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <column>
-             <property name="text">
-              <string notr="true">1</string>
-             </property>
-            </column>
+            <property name="columnCount">
+             <number>0</number>
+            </property>
            </widget>
           </item>
          </layout>
@@ -266,6 +295,59 @@ background-color: rgb(226,226,226);</string>
            </widget>
           </item>
          </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QFrame" name="frame_7">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::HLine</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QFrame" name="horizontalFrame">
+      <property name="minimumSize">
+       <size>
+        <width>10</width>
+        <height>10</height>
+       </size>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="export_cmp_btn">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 10pt &quot;Microsoft YaHei UI&quot;;
+background-color:#455ab3;
+color:#fff;</string>
+         </property>
+         <property name="text">
+          <string>导出所有选中分量</string>
+         </property>
         </widget>
        </item>
       </layout>

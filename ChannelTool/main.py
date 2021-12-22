@@ -4,7 +4,6 @@ import datetime
 import time
 import json
 import csv
-
 import openpyxl
 
 from PyQt5 import QtWidgets, QtGui
@@ -33,6 +32,7 @@ class UiMain(QMainWindow, Ui_MainWindow):
         self.component_list = {}
         self.currStationIndex=-1
         self.stations=[]
+        self.currStation={}
         self.progressDialog=None
         self.hasData=False
         self.crawl_btn.setEnabled(False)
@@ -41,49 +41,42 @@ class UiMain(QMainWindow, Ui_MainWindow):
         self.bind_signal()
 
 
-
     def bind_signal(self):
         self.read_excel_btn.clicked.connect(self.read_excel_btn_clicked)
         self.crawl_btn.clicked.connect(self.crawl_btn_clicked)
         self.next_btn.clicked.connect(self.next_btn_clicked)
         self.prior_btn.clicked.connect(self.prior_btn_clicked)
-        #self.treeWidget.itemClicked.connect(self.tree_item_clicked)
-        self.listWidget.itemClicked.connect(self.station_item_clicked)
+
+        self.stationListWidget.itemClicked.connect(self.station_item_clicked)
         self.treeWidget.itemChanged.connect(self.channelSelectionChanged)
         self.save_btn.clicked.connect( self.save_btn_clicked )
         self.export_cmp_btn.clicked.connect(self.export_cmp_btn_clicked)
         self.load_btn.clicked.connect(self.load_btn_clicked)
 
     def export_cmp_btn_clicked(self):
-        fileName_choose, filetype = QtWidgets.QFileDialog.getSaveFileName(self, "导出台站信息", "",
-                                                                          "csv Files (*.csv;)")
-        if fileName_choose == "":
+        fname, filetype = QtWidgets.QFileDialog.getSaveFileName(self, "导出台站信息", "", "csv Files (*.csv;)")
+        if fname == "":
             return
-        self.export_cmp_data(fileName_choose)
+        self.exportSelectedChannels(fname)
+
+    def updateStationLabel(self,station):
+        if "selectedChannels" in station:
+            n=len(station["selectedChannels"])
+        else:
+            n=0
+        self.stationListWidget.currentItem().setText(self.currStation["name"]+"/"+self.currStation["name"]+ " ( "+str(n)+"  channels selected" +" )")
+
     def channelSelectionChanged(self,item, col):
+        if item.text(1):  ##item.text(1) is the key to channel object
+            self.currStation["allChannels"][item.text(1)]["selected"]=item.checkState(0)
+            self.updateSelectedChannels(item)
+            self.updateStationLabel(self.currStation)
 
-        print("item changed:  "+str(datetime.datetime.now()) +item.text(0))
-        parent_list=self.getItemParents(item)
-        if len(parent_list)!=4:
-             return
-        #self.updateChannelStatus(item, parent_list)
-
-    def getItemParents(self,item):
-
-        result=[]
-        while item.parent():
-            result.insert(0, item.text(0))
-            item = item.parent()
-        result.insert(0, item.text(0))
-
-        return result
-
-    def updateChannelStatus(self, item,parent_list):
-        data=self.stations[self.currStationIndex]["data"]
-        for key in  parent_list:
-            data=data[key]
-
-        data["selected"]=item.checkState(0)
+    def updateSelectedChannels(self, item):
+        if item.checkState(0) ==Qt.Unchecked:
+            self.currStation["selectedChannels"].pop(item.text(1))
+        else:
+            self.currStation["selectedChannels"][item.text(1)]=self.currStation["allChannels"][item.text(1)]
 
     def read_excel_btn_clicked(self):
 
@@ -96,17 +89,18 @@ class UiMain(QMainWindow, Ui_MainWindow):
         self.excel_path_edit.setText(filename)
         # 解析excel文件
         self.parse_excel(filename)
-        # 填充listWidget
-        self.listWidget.clear()
+        # 填充stationListWidget
+        self.stationListWidget.clear()
         for station in self.stations:
-            self.listWidget.addItem(str(station['network'] + '/' + station['name']))
+            self.stationListWidget.addItem(str(station['network'] + '/' + station['name']))
 
     def crawl_btn_clicked(self):
         self.crawl()
+
         self.hasData=True
         self.currStationIndex=0
-        self.listWidget.setCurrentRow(self.currStationIndex)
-        self.update_tree()
+        self.currStation = self.stations[self.currStationIndex]
+        self.selectedStationChanged()
 
 
     def keyPressEvent(self, *args, **kwargs):
@@ -119,12 +113,7 @@ class UiMain(QMainWindow, Ui_MainWindow):
 
     # 解析excel
     def parse_excel(self, file_path):
-        # 清除原有数据
-        self.stations = []
-
-        # 打开上传 excel 表格
         wb = openpyxl.load_workbook(file_path)
-        # 打开文件
         sheet_1 = wb.worksheets[0]  # 根据sheet页的排序选取sheet
 
         for i in range(2, sheet_1.max_row+1):
@@ -145,6 +134,7 @@ class UiMain(QMainWindow, Ui_MainWindow):
 
         self.crawl_btn.setEnabled(True)
         self.currStationIndex=0
+        self.currStation = self.stations[self.currStationIndex]
 
 
     def crawl(self):
@@ -168,6 +158,7 @@ class UiMain(QMainWindow, Ui_MainWindow):
 
             QApplication.processEvents()
 
+        QMessageBox.information(self, "提示", "台站数据爬取完成！", QMessageBox.Ok)
         self.progressDialog.hide()
 
         return
@@ -183,13 +174,10 @@ class UiMain(QMainWindow, Ui_MainWindow):
             return
 
         self.currStationIndex = self.currStationIndex + 1
+        self.currStation = self.stations[self.currStationIndex]
 
-        self.listWidget.setCurrentRow(self.currStationIndex)
-        self.update_index_lable()
-        self.desc_label.setText('network: ' + self.stations[self.currStationIndex]['network'] + '\n' + 'station: ' +
-                                self.stations[self.currStationIndex]['name'])
+        self.selectedStationChanged()
 
-        self.update_tree()
 
     def prior_btn_clicked(self):
         if not self.hasData:
@@ -198,30 +186,11 @@ class UiMain(QMainWindow, Ui_MainWindow):
         if self.currStationIndex == 0:
             QMessageBox.warning(self, "警告", "已经是第一个台站了", QMessageBox.Ok)
             return
-        self.component_select_status()
-        self.currStationIndex = self.currStationIndex - 1
-        self.listWidget.setCurrentRow(self.currStationIndex)
+        self.currStationIndex=self.currStationIndex-1
+        self.currStation = self.stations[self.currStationIndex]
+        self.selectedStationChanged()
 
-        self.desc_label.setText('network: ' + self.stations[self.currStationIndex]['network'] + '\n' + 'station: ' +
-                                self.stations[self.currStationIndex]['name'])
-        item = self.stations[self.currStationIndex]
-
-        self.update_tree()
-
-    def component_select_status(self):
-        select_item = []
-        for key, item in self.component_list.items():
-            if item.checkState(0) == Qt.Checked:
-                select_item.append(key)
-
-        #self.stations[self.currStationIndex]['select_item'] = select_item
-        # 修改list颜色
-        if select_item:
-            item = self.listWidget.item(self.currStationIndex)
-            if item:
-                item.setBackground(QtGui.QColor('cyan'))
-
-    def export_cmp_data(self, filename):
+    def exportSelectedChannels(self, filename):
 
         with open(filename, 'w', newline='') as csvfile:
             w = csv.writer(csvfile)
@@ -232,7 +201,8 @@ class UiMain(QMainWindow, Ui_MainWindow):
             # 相同设备下同赫兹分量合并
             for station in self.stations:
                 merge_dict = {}
-                for key in station['select_item']:
+                for key in station['selectedChannels']:
+
                     block_index, location, device_name, hertz, c = key.split('||')
                     key = '||'.join([block_index, location, device_name, hertz])
                     if key not in merge_dict.keys():
@@ -249,9 +219,22 @@ class UiMain(QMainWindow, Ui_MainWindow):
                 w.writerow(row)
 
 
-    def update_tree(self):
+    def selectedStationChanged(self):
+
+        self.stationListWidget.setCurrentRow(self.currStationIndex)
+        self.desc_label.setText('network: ' + self.currStation['network'] + '\n' + 'station: ' +
+                                self.currStation['name'])
+
+        self.treeWidget.itemChanged.disconnect(self.channelSelectionChanged)
+        ##add some keys to stations if missing
+        if not "allChannels" in self.currStation:
+            self.currStation["allChannels" ]={}
+        if not "selectedChannels" in self.currStation:
+            self.currStation["selectedChannels" ]={}
+
+
         self.treeWidget.clear()
-        data = self.stations[self.currStationIndex]['data']
+        data = self.currStation['data']
         self.component_list.clear()
         # 设置列数
         self.treeWidget.setColumnCount(1)
@@ -269,53 +252,66 @@ class UiMain(QMainWindow, Ui_MainWindow):
                 loc_text = 'location:  ' + location
                 loc.setText(0, loc_text)
                 # 设备节点
-                for device_name, cha_list in device_list.items():
+                for device_name, channel_list in device_list.items():
                     device = QTreeWidgetItem(loc)
                     device_text = 'Device:  ' + device_name
                     device.setText(0, device_text)
+
                     # 频率节点
-                    for hertz, cha in cha_list.items():
-                        if len(content['locations']) == 1 and len(device_list) == 1 and len(cha_list) == 1:
+                    for frequence, channel in channel_list.items():
+                        if len(content['locations']) == 1 and len(device_list) == 1 and len(channel_list) == 1:
                             auto_check = True
                         else:
                             auto_check = False
                         hz = QTreeWidgetItem(device)
-                        hz.setText(0, hertz)
+                        hz.setText(0, frequence)
                         hz.setFlags(hz.flags() | Qt.ItemIsUserCheckable|Qt.ItemIsAutoTristate)
                         #hz.setCheckState(0, Qt.Unchecked)
                         # 分量节点
-                        for c in cha.keys():
+                        for c in channel.keys():
                             ch = QTreeWidgetItem(hz)
                             ch.setText(0, c)
-                            component_key = '||'.join([str(index), location, device_name, hertz, c])
-                            if component_key in self.stations[self.currStationIndex]['select_item']:
-                                ch.setCheckState(0, Qt.Checked)
-                            elif not self.stations[self.currStationIndex]['select_item'] and auto_check is True:
-                                ch.setCheckState(0, Qt.Checked)
-                            else:
-                                ch.setCheckState(0, Qt.Unchecked)
-                            self.component_list[component_key] = ch
+                            ##using objectId to get all channels
+                            tt="objectId:"+str(id(channel[c]))
+                            ch.setText(1, tt)
+                            self.currStation["allChannels"][tt] = channel[c]
+
+                            tt=content["description"]["start"]+"-"+content["description"]["end"]
+                            channel[c]["path"]='/'.join([tt, location, device_name, frequence,c])
+
+                            if not "selected" in channel[c]:  ##add selected key
+                                channel[c]["selected"]=Qt.Unchecked
+                            ch.setCheckState(0, channel[c]["selected"])
 
         self.treeWidget.expandAll()
+
+        self.treeWidget.itemChanged.connect(self.channelSelectionChanged)
+
 
     def save_btn_clicked(self):
         if not self.hasData:
             QMessageBox.warning(self, "警告", "没有台站工作时间数据，请先爬取",QMessageBox.Ok)
             return
-
-        # 选择路径与文件名
-
         fileName_choose, filetype = QtWidgets.QFileDialog.getSaveFileName(self, "保存台站信息", os.path.join(os.getcwd(), 'stations.json'),  "json Files (*.json;)")
         if fileName_choose == "":
             return
-        # 保存文件
-        self.component_select_status()
         self.save_stations(fileName_choose)
 
     def save_stations(self,fname):
         with open(fname, 'w', encoding='utf-8') as f:
             f.write(json.dumps(self.stations))
         return
+    def resetStationListWidget(self):
+        self.stationListWidget.clear()
+        for station in self.stations:
+            if "selectedChannels" in station:
+                n=len(station["selectedChannels"])
+            else:
+                n=0
+            tt=station['network'] + '/' + station['name']+" ( "+str(n)+"  channels selected)"
+            self.stationListWidget.addItem(tt)
+
+
 
     def load_btn_clicked(self):
         '''
@@ -331,119 +327,32 @@ class UiMain(QMainWindow, Ui_MainWindow):
         self.reset_data()
         with open(fileName_choose, 'r') as f:
             self.stations = json.loads(f.read())
-            self.excel_path_edit.setText(fileName_choose)
-            # 填充listWidget
-            self.listWidget.clear()
-            for station in self.stations:
-                self.listWidget.addItem(str(station['network'] + '/' + station['name']))
-            # self.next()
-        self.hasData=True
-        self.desc_label.setText('network: ' + self.stations[self.currStationIndex]['network'] + '\n' + 'station: ' +
-                                self.stations[self.currStationIndex]['name'])
-        self.currStationIndex=0
-        self.listWidget.setCurrentRow(self.currStationIndex)
-        self.update_tree()
-        self.update_index_lable()
-        self.component_select_status()
+        self.staion_info_path_edit.setText(fileName_choose)
+        # 填充stationListWidget
+        self.resetStationListWidget()
 
-    def update_index_lable(self):
-        select_number = len([station['select_item'] for station in self.stations if station['select_item']])
-        self.index_label.setText(str(select_number) + '/' + str(len(self.stations)))
+        self.hasData=True
+        self.currStationIndex=0
+        self.currStation=self.stations[self.currStationIndex]
+        self.selectedStationChanged()
+
 
     def station_item_clicked(self, item):
-
-        curr_index = self.listWidget.currentRow()
         if not self.hasData:
             QMessageBox.warning(self, "警告", "没有台站工作时间数据，请先爬取",QMessageBox.Ok)
             return
+        curr_index = self.stationListWidget.currentRow()
         if curr_index == self.currStationIndex:
             return
 
-        self.component_select_status()
         self.currStationIndex = curr_index
-        self.update_index_lable()
-        self.desc_label.setText('network: ' + self.stations[self.currStationIndex]['network'] + '\n' + 'station: ' +
-                                self.stations[self.currStationIndex]['name'])
-
-        self.update_tree()
+        self.currStation = self.stations[self.currStationIndex]
+        self.selectedStationChanged()
 
     def reset_data(self):
-        self.stations.clear()
-
+        self.stations=[]
         self.currStationIndex = -1
-        self.component_list = {}
-
-    def tree_item_clicked(self, item, col):
-        item = self.treeWidget.currentItem()
-        # 判断层级
-        item_text = item.text(0)
-        all_check = False  # 是全选，还是全部取消
-        if 'block_' in item_text:
-            location_list = [item.child(i) for i in range(item.childCount())]
-            for location in location_list:
-                device_list = [location.child(i) for i in range(location.childCount())]
-                for device in device_list:
-                    hertz_list = [device.child(i) for i in range(device.childCount())]
-                    for hertz in hertz_list:
-                        cha_list = [hertz.child(i) for i in range(hertz.childCount())]
-                        for cha in cha_list:
-                            if cha.checkState(0) == Qt.Unchecked:
-                                # 如果出现一个未选中的，则全选
-                                all_check = True
-                                break
-                        for cha in cha_list:
-                            if all_check:
-                                cha.setCheckState(0, Qt.Checked)
-                            else:
-                                cha.setCheckState(0, Qt.Unchecked)
-        elif 'location:' in item_text:
-            device_list = [item.child(i) for i in range(item.childCount())]
-            for device in device_list:
-                hertz_list = [device.child(i) for i in range(device.childCount())]
-                for hertz in hertz_list:
-                    cha_list = [hertz.child(i) for i in range(hertz.childCount())]
-                    for cha in cha_list:
-                        if cha.checkState(0) == Qt.Unchecked:
-                            # 如果出现一个未选中的，则全选
-                            all_check = True
-                            break
-                    for cha in cha_list:
-                        if all_check:
-                            cha.setCheckState(0, Qt.Checked)
-                        else:
-                            cha.setCheckState(0, Qt.Unchecked)
-        elif 'Device:' in item_text:
-            hertz_list = [item.child(i) for i in range(item.childCount())]
-            for hertz in hertz_list:
-                cha_list = [hertz.child(i) for i in range(hertz.childCount())]
-                for cha in cha_list:
-                    if cha.checkState(0) == Qt.Unchecked:
-                        # 如果出现一个未选中的，则全选
-                        all_check = True
-                        break
-                for cha in cha_list:
-                    if all_check:
-                        cha.setCheckState(0, Qt.Checked)
-                    else:
-                        cha.setCheckState(0, Qt.Unchecked)
-        elif 'Hz' in item_text:
-            cha_list = [item.child(i) for i in range(item.childCount())]
-            for cha in cha_list:
-                if cha.checkState(0) == Qt.Unchecked:
-                    # 如果出现一个未选中的，则全选
-                    all_check = True
-                    break
-            for cha in cha_list:
-                if all_check:
-                    cha.setCheckState(0, Qt.Checked)
-                else:
-                    cha.setCheckState(0, Qt.Unchecked)
-        else:
-            if item.checkState(0) == Qt.Checked:
-                item.setCheckState(0, Qt.Unchecked)
-            elif item.checkState(0) == Qt.Unchecked:
-                item.setCheckState(0, Qt.Checked)
-        return
+        self.currStation = {}
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
